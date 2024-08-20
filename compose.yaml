@@ -1,0 +1,24 @@
+services:
+  vnc-client:
+    image: husarion/webvnc-client
+    ports:
+      - ${HUSARNET_IPV6}:8080:8080
+
+  websockify:
+    image: husarion/websockify
+    ports:
+      - ${HUSARNET_IPV6}:5902:5902
+    environment:
+      - VNC_SERVER_HOST=vnc-server
+      - VNC_SERVER_PORT=5901
+      - WEBSOCKIFY_PORT=5902
+
+  vnc-server:
+    image: husarion/webvnc-server
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    ipc: host
+    environment:
+      - DISPLAY
+      - PASSWORD=${VNC_PASSWORD:-husarion}
+      - VNC_SERVER_PORT=5901
