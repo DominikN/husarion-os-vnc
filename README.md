@@ -20,5 +20,10 @@ sudo apt install jq
 sudo ./remote_desktop_start.sh
 ```
 
+3. To disable the remote desktop run:
+
+```bash
+sudo ./remote_desktop_stop.sh
+```
 
 
